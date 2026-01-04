@@ -5,29 +5,23 @@ const app = express();
 
 const PORT = 3000;
 
-app.set("view engine", "ejs");
-app.use(express.static('./public'));
-
-app.get('/', function (req, res){
-  res.render("index", {age: 12});
-})
-
-app.get('/error', function (req, res, next) {
-  next(new Error("Something went wrong"));
+// GET - Read Data
+app.get('/users', (req, res) => {
+  res.send("Get all users");
 });
 
 
-app.get('/contact', function (req, res){
-  res.render("contact", {name: "Paras Kalura"});
-} )
+// POST - Create Data
+app.post('/users',(req, res) => {
+  res.send("Create a new user");
+});
 
-app.use(function errorHandler (err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
-  }
-  res.status(500)
-  res.render('error', { error: err })
-})
+
+// PUT- Update Data
+app.put('/users/:username', (req, res) => {
+  res.send(`Update User to: ${req.params.username}`);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
