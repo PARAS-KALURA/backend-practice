@@ -1,23 +1,15 @@
-const express = require('express');
-const users = require('./MOCK_DATA.json');
-
+const express = require("express");
 const app = express();
-const PORT = 8000;
 
-app.get('/api/users', (req, res) => {
-    return res.json(users);
-});
+const PORT = 3000;
 
-app.get('/users', (req, res) => {
-    const html = `
-    <ul>
-    ${users.map((user) => `<li>${user.first_name}</li>`).join("")};
-    </ul>
-    `;
-    res.send(html);
+app.use(express.json()); // 👈 MUST be before routes
+
+app.post("/user", (req, res) => {
+  console.log(req.body);
+  res.send("User received");
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is loading: ${PORT}`);
-  
-})
+  console.log(`Server is running: ${PORT}`);
+});
